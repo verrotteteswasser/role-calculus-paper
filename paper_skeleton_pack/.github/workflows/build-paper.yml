@@ -1,0 +1,36 @@
+
+name: build-paper
+
+on:
+  push:
+    paths:
+      - '**.tex'
+      - 'figure/**'
+      - '.github/workflows/build-paper.yml'
+  pull_request:
+    paths:
+      - '**.tex'
+      - 'figure/**'
+
+jobs:
+  latex:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install TeX Live (minimal set)
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y --no-install-recommends \
+            texlive-latex-base texlive-latex-recommended texlive-latex-extra \
+            texlive-fonts-recommended texlive-bibtex-extra biber latexmk
+
+      - name: Build PDF
+        run: latexmk -pdf -interaction=nonstopmode -halt-on-error main.tex
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: paper-pdf
+          path: main.pdf

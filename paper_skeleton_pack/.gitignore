@@ -1,0 +1,17 @@
+
+# LaTeX build
+*.aux
+*.bbl
+*.blg
+*.fls
+*.fdb_latexmk
+*.log
+*.out
+*.synctex.gz
+*.toc
+*.lof
+*.lot
+*.run.xml
+
+# Generated figures/snippets (keep PNG/TEX in figure/)
+result/
